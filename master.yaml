@@ -1,0 +1,26 @@
+Description: >
+
+    This template deploys a VPC, with a pair of public and private subnets spread 
+    across two Availabilty Zones. It deploys an Internet Gateway, with a default 
+    route on the public subnets. It deploys a pair of NAT Gateways (one in each AZ), 
+    and default routes for them in the private subnets.
+
+    Last Modified: 16th Nov 2016
+
+Resources:
+
+    VPC:
+       Type: AWS::CloudFormation::Stack
+       Properties:
+            TemplateURL: https://s3-us-west-2.amazonaws.com/cf-templates-1despqawduo2m-us-west-2/rohit-test-cf/infrastructure/vpc.yaml
+            Parameters:
+                EnvironmentName:    Test
+                VpcCIDR:            10.180.0.0/16
+                PublicSubnet1CIDR:  10.180.1.0/24
+                PublicSubnet2CIDR:  10.180.2.0/24
+                PrivateSubnet1CIDR: 10.180.3.0/24
+                PrivateSubnet2CIDR: 10.180.4.0/24
+                PrivateSubnet3CIDR: 10.180.5.0/24
+                PrivateSubnet4CIDR: 10.180.6.0/24
+                PrivateSubnet5CIDR: 10.180.7.0/24
+                PrivateSubnet6CIDR: 10.180.8.0/24
