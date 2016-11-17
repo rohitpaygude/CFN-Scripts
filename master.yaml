@@ -12,7 +12,7 @@ Resources:
     VPC:
        Type: AWS::CloudFormation::Stack
        Properties:
-            TemplateURL: https://s3-us-west-2.amazonaws.com/cf-templates-1despqawduo2m-us-west-2/rohit-test-cf/infrastructure/vpc.yaml
+            TemplateURL: !Sub ${TemplateLocation}/infrastructure/vpc.yaml 
             Parameters:
                 EnvironmentName:    Test
                 VpcCIDR:            10.180.0.0/16
