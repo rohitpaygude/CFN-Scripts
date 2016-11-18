@@ -5,14 +5,21 @@ Description: >
     route on the public subnets. It deploys a pair of NAT Gateways (one in each AZ), 
     and default routes for them in the private subnets.
 
-    Last Modified: 16th Nov 2016
+    It then deploys a highly available ECS cluster using an AutoScaling Group, with 
+    ECS hosts distributed across multiple Availability Zones. 
+
+    Finally, it deploys a pair of example ECS services from containers published in 
+    Amazon EC2 Container Registry (Amazon ECR).
+
+    Last Modified: 22nd September 2016
+    Author: Paul Maddox <pmaddox@amazon.com>
 
 Resources:
 
     VPC:
        Type: AWS::CloudFormation::Stack
        Properties:
-            TemplateURL: !Sub ${TemplateLocation}/infrastructure/vpc.yaml 
+            TemplateURL: !Sub ${TemplateLocation}/infrastructure/vpc.yaml
             Parameters:
                 EnvironmentName:    Test
                 VpcCIDR:            10.180.0.0/16
@@ -24,3 +31,11 @@ Resources:
                 PrivateSubnet4CIDR: 10.180.6.0/24
                 PrivateSubnet5CIDR: 10.180.7.0/24
                 PrivateSubnet6CIDR: 10.180.8.0/24
+
+    SecurityGroups:
+        Type: AWS::CloudFormation::Stack
+        Properties:
+            TemplateURL: !Sub ${TemplateLocation}/infrastructure/security-groups.yaml
+            Parameters: 
+                EnvironmentName: test
+                VPC: !GetAtt VPC.Outputs.VPC
